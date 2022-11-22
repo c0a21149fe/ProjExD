@@ -12,6 +12,7 @@ def start():
         cur_lst = random.sample(def_lst, len(def_lst))
         alph = " ".join(cur_lst.copy())
         lost_lst = [""] * len_lost
+        
         for i in range(len_lost):
             lost_lst[i] = cur_lst.pop(random.randint(0, len_all-1-i))
         cur = " ".join(cur_lst)
