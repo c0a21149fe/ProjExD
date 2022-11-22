@@ -1,4 +1,5 @@
 import random
+import datetime
 
 def shutudai():
     que_dct = {"サザエの旦那の名前は？" : ("マスオ", "ますお"),
@@ -15,11 +16,14 @@ def kaitou(anss, usr):
         print("正解!!!")
     else:
         print("出直してこい")
+    print(f"回答時間：{(ed-st).seconds}秒")
 
 
 
 if __name__ == "__main__":
-    kaitou(shutudai(), input("答えるんだ："))
-    # anss = shutudai()
-    # usr = input("答えるんだ：")
-    # kaitou(anss, usr)
+    # kaitou(shutudai(), input("答えるんだ："))
+    anss = shutudai()
+    st = datetime.datetime.now()
+    usr = input("答えるんだ：")
+    ed = datetime.datetime.now()
+    kaitou(anss, usr)
