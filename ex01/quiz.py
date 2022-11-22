@@ -19,6 +19,7 @@ def kaitou(anss, usr):
 
 
 if __name__ == "__main__":
-    anss = shutudai()
-    usr = input("答えるんだ：")
-    kaitou(anss, usr)
+    kaitou(shutudai(), input("答えるんだ："))
+    # anss = shutudai()
+    # usr = input("答えるんだ：")
+    # kaitou(anss, usr)
