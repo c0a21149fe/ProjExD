@@ -7,7 +7,6 @@ tried = 1
 
 def start():
     global len_all, len_lost, tried
-    st = datetime.datetime.now()
     def_lst = alph_list.copy()
     while(True):
         cur_lst = random.sample(def_lst, len(def_lst))
@@ -39,7 +38,6 @@ def start():
             else:
                 print("全問正解です")
                 print(f"あなたは{tried}回挑戦しました。")
-                print(f"実行時間：{(datetime.datetime.now()-st).seconds}秒")
                 break
         else:
             print("不正解です.また、チャレンジしてください")
@@ -47,7 +45,9 @@ def start():
         tried += 1
 
 if __name__ == "__main__":
+    st = datetime.datetime.now()
     alphabet = [chr(i) for i in range(65, 91)]  # AtoZ
     alph_list = random.sample(alphabet, len_all)
     start()
+    print(f"実行時間：{(datetime.datetime.now()-st).seconds}秒")
 
