@@ -18,7 +18,7 @@ def start():
         cur = " ".join(cur_lst)
         lost = " ".join(lost_lst)
         print(f"対象文字：\n{alph}")
-        print(f"欠損文字：\n{lost}")
+        print(f"欠損文字（デバッグ用）：\n{lost}")
         print(f"表示文字：\n{cur}")
         
         try:
