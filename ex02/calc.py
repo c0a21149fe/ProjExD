@@ -25,7 +25,7 @@ def ope_fun_click(event):
         else:
             entry.insert(tk.END, operators[ipt])
 
-    if ipt == "=":
+    elif ipt == "=":
         siki = entry.get()
         rireki.append(siki)
         # for k, v in operators.items():
@@ -53,7 +53,7 @@ def ope_fun_click(event):
             entry.insert(tk.END, f_rireki.pop(-1))
         except IndexError:
             pass
-        
+
     print(rireki)
 
 
