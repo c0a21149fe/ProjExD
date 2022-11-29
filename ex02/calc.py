@@ -11,7 +11,11 @@ root = tk.Tk()
 root.title("tk")
 root.geometry("300x500")
 
-r, c = 0, 0
+entry = tk.Entry(root, justify="right", width=10, font=("", 40))
+entry.grid(row=0, column=0, columnspan=3)
+
+
+r, c = 1, 0
 for i in range(9, -1, -1):
 
     num_key = tk.Button(root, text=i, width=4, height=2, font=("", 30))
