@@ -24,6 +24,7 @@ def ope_fun_click(event):
             pass
         else:
             entry.insert(tk.END, operators[ipt])
+
     if ipt == "=":
         siki = entry.get()
         rireki.append(siki)
@@ -33,14 +34,17 @@ def ope_fun_click(event):
         ans = eval(siki)
         entry.delete(0, tk.END)
         entry.insert(tk.END, ans)
+
     elif ipt == "C":
         rireki.append(entry.get())
         entry.delete(0, tk.END)
+
     elif ipt == "↶":
         p_siki = rireki.pop(-1)
         f_rireki.append(entry.get())
         entry.delete(0, tk.END)
         entry.insert(tk.END, p_siki)
+
     elif ipt == "↷":
         p_siki = entry.get()
         try:
@@ -49,6 +53,7 @@ def ope_fun_click(event):
             entry.insert(tk.END, f_rireki.pop(-1))
         except IndexError:
             pass
+        
     print(rireki)
 
 
