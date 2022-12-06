@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
-import maze_maker
+import maze_maker as mm
 
 
 def key_down(event): #キーが押されたとき
@@ -33,6 +33,8 @@ root.title("迷えるこうかとん")
 
 canvas = tk.Canvas(root, width=1500, height=800, bg="black")
 canvas.pack()
+
+maze_lst = mm.make_maze(15, 9) #迷路の生成
 
 koukaton = tk.PhotoImage(file="fig/8.png")
 cx, cy = 300, 400
