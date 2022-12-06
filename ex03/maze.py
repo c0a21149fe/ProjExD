@@ -67,14 +67,6 @@ canvas.create_rectangle(goal_x*100, goal_y*100, goal_x *
 canvas.pack()
 maze_lst[goal_x][goal_y] = 2 #ゴールの番号
 
-# mm.print_maze(maze_lst)
-
-# jumyo = 25
-# label1 = tk.Label(root, text = "こうかとんの寿命", width=100, height=900)
-# label1.place(x=100, y=900)
-# label2 = tk.Label(root, text = jumyo, width=300, height=900)
-# label2.pack()
-
 
 #迷路の座標
 mx, my = 1, 1
