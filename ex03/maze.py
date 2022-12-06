@@ -21,6 +21,16 @@ def main_proc(): #メイン処理（繰り返し）
         mx -= 1
     elif key == "Right":
         mx += 1
+
+    if maze_lst[mx][my] == 1: #移動先が壁だったら
+        if key == "Up":  # keyの値によって、こうかとんの動く向きを変える
+            my += 1
+        elif key == "Down":
+            my -= 1
+        elif key == "Left":
+            mx += 1
+        elif key == "Right":
+            mx -= 1
     
     canvas.coords("koukaton", mx*100+50, my*100+50) #こうかとんの座標変更
     root.after(100, main_proc) #100ms毎に再帰
