@@ -2,15 +2,31 @@ import tkinter as tk
 import tkinter.messagebox as tkm
 
 
-def key_down(event):
+def key_down(event): #キーが押されたとき
     global key
     key = event.keysym
 
-def key_up(event):
+def key_up(event): #キーが上がったとき
     global key
     key = ""
 
-root = tk.Tk()
+def main_proc(): #メイン処理（繰り返し）
+    global cx, cy
+    if key == "Up": #keyの値によって、こうかとんの動く向きを変える
+        cy -= 20
+    elif key == "Down":
+        cy += 20
+    elif key == "Left":
+        cx -= 20
+    elif key == "Right":
+        cx += 20
+    
+    canvas.coords("koukaton", cx, cy) #こうかとんの座標変更
+    root.after(100, main_proc) #100ms毎に再帰
+
+
+
+root = tk.Tk() #ウィンドウ作成
 root.title("迷えるこうかとん")
 #root.geometry("1500x900")
 
@@ -25,5 +41,7 @@ canvas.pack()
 key = ""
 root.bind("<KeyPress>", key_down)
 root.bind("<KeyRelease>", key_up)
+
+main_proc()
 
 root.mainloop()
