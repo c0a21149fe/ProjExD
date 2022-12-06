@@ -12,17 +12,17 @@ def key_up(event): #キーが上がったとき
     key = ""
 
 def main_proc(): #メイン処理（繰り返し）
-    global cx, cy
+    global mx, my
     if key == "Up": #keyの値によって、こうかとんの動く向きを変える
-        cy -= 20
+        my -= 1
     elif key == "Down":
-        cy += 20
+        my += 1
     elif key == "Left":
-        cx -= 20
+        mx -= 1
     elif key == "Right":
-        cx += 20
+        mx += 1
     
-    canvas.coords("koukaton", cx, cy) #こうかとんの座標変更
+    canvas.coords("koukaton", mx*100+50, my*100+50) #こうかとんの座標変更
     root.after(100, main_proc) #100ms毎に再帰
 
 
@@ -37,8 +37,12 @@ canvas.pack()
 maze_lst = mm.make_maze(15, 9) #
 mm.show_maze(canvas, maze_lst)
 
+#迷路の座標
+mx, my = 1, 1
+#tkインター上の座標
+cx, cy = mx*100+50, my*100+50
+#こうかとんの表示
 koukaton = tk.PhotoImage(file="fig/8.png")
-cx, cy = 300, 400
 canvas.create_image(cx, cy, image=koukaton, tag="koukaton")
 canvas.pack()
 
