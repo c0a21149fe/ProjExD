@@ -14,4 +14,5 @@ cx, cy = 300, 400
 canvas.create_image(cx, cy, image=koukaton, tag="koukaton")
 canvas.pack()
 
+key = ""
 root.mainloop()
