@@ -34,7 +34,8 @@ root.title("迷えるこうかとん")
 canvas = tk.Canvas(root, width=1500, height=800, bg="black")
 canvas.pack()
 
-maze_lst = mm.make_maze(15, 9) #迷路の生成
+maze_lst = mm.make_maze(15, 9) #
+mm.show_maze(canvas, maze_lst)
 
 koukaton = tk.PhotoImage(file="fig/8.png")
 cx, cy = 300, 400
