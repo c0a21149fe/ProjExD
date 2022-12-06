@@ -54,7 +54,7 @@ def ope_fun_click(event):
         except IndexError:
             pass
 
-    print(rireki)
+    #print(rireki)
 
 
 root = tk.Tk()
@@ -88,7 +88,7 @@ for i in range(9, -1, -1):
             c = 1
     else:
         c += 1
-    print(c)
+    #print(c)
 
 r, c = 2, 3
 operators = ["×", "-", "+", "="]
