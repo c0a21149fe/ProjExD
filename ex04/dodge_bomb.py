@@ -152,6 +152,7 @@ def main():
             elif HANSHA < 0: #反射時間が終わったら
                 flag = False #反射終了
                 COOLTIME = 5000 #クールダウンタイム
+                
         HANSHA -= 1 #残り反射時間を減らす
         COOLTIME -= 1 #残りクールタイムを減らす
 
