@@ -91,7 +91,7 @@ class Bird: #こうかとんのクラス
                 and abs(self.rct.centery - bomb.rct.centery) < 300: 
                 
                 del bombs[i] #該当ボムを一つ削除する
-                self.eating = 1000 #tick
+                self.eating = 2000 #tick
                 # for val in Bird.key_delta.values(): #こうかとんの動きを速くする
                 #     val[0] *= 2
                 #     val[1] *= 2
@@ -230,7 +230,7 @@ def main():
             kkt.rct.center = eating_kkt.rct.center
         elif kkt.eating < 0:
             kkt.update(scr)
-        elif kkt.eating == 999: #kktがeatし始めたとき
+        elif kkt.eating == 1999: #kktがeatし始めたとき
             eating_kkt = eatingBird("fig/8.png", 2.0, kkt.rct.center)
             eating_kkt.update(scr)
             uma = Uma()
