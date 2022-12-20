@@ -81,8 +81,6 @@ class Bird: #こうかとんのクラス
                 self.rct.centery -= delta[1]*2
         self.blit(scr)
 
-        # self.eating -= 1 #tick毎に-1
-
     def eat_bomb(self): #スペースが押されたら爆弾を食べる
         global bombs
         for i, bomb in enumerate(bombs):
@@ -96,6 +94,7 @@ class Bird: #こうかとんのクラス
                 #     val[0] *= 2
                 #     val[1] *= 2
                 break
+
 
 class eatingBird: #こうかとんのクラス
     key_delta = {
@@ -127,6 +126,7 @@ class eatingBird: #こうかとんのクラス
                 self.rct.centery -= delta[1]
         self.blit(scr)
 
+
 class Texts:
     def __init__(self):
         self.font = pg.font.SysFont('msgothic', 50)
@@ -137,6 +137,7 @@ class Texts:
         )  # 経過時間のテキスト
         scr.sfc.blit(self.txt, (100, scr.rct.height-100))
 
+
 class Uma:
     def __init__(self):
         self.font = pg.font.SysFont('msgothic', 30)
@@ -146,7 +147,6 @@ class Uma:
             "うまうまっ！", True, (199, 21, 133)
         )
         scr.sfc.blit(self.txt, (kokaton.rct.centerx+50, kokaton.rct.centery-50))
-
 
 
 class Bomb: #爆弾のクラス
@@ -211,7 +211,8 @@ def main():
 
     texts = Texts()
 
-    # 練習２
+
+    # 繰り返し
     while True:
         now = time.time()
         scr.blit()
@@ -248,7 +249,6 @@ def main():
                     return
         #texts
         texts.update(scr, now, bgn)
-        
 
         #一定時間ごとに爆弾を増やす
         if bomb_timer % 2000 == 0:
