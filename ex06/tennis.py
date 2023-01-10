@@ -86,7 +86,7 @@ def main():
     p1 = Player((255, 0, 0), (100, 500), 10, key_delta_p1, scr)
     p1.blit(scr)
 
-    key_delta_p1 = {
+    key_delta_p2 = {
         pg.K_UP:    [0, -1],
         pg.K_DOWN:  [0, +1],
         pg.K_LEFT:  [-1, 0],
@@ -98,6 +98,7 @@ def main():
     while True:
         scr.blit()
         p1.update(scr)
+        p2.update(scr)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
