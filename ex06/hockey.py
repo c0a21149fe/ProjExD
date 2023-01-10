@@ -8,6 +8,7 @@ SCREENRECT = pg.Rect(0, 0, 1321, 701)
 
 
 class Screen:  # スクリーン
+
     def __init__(self, title, size, bgf):
         self.title = title
         self.size = size
@@ -46,7 +47,8 @@ class Screen:  # スクリーン
         fullscreen = not fullscreen
 
 
-class Player:
+class Player: #プレイヤーが使用するバーを表示するクラス
+
     def __init__(self, color, xy, yoko, tate, key_delta, scr : Screen):
         self.sfc = pg.Surface((yoko, tate))  # 正方形の空のSurface
         self.sfc.set_colorkey((0, 0, 0))
@@ -73,6 +75,7 @@ class Player:
 
 
 class Ball:  # ボールのクラス
+
     def __init__(self, color, xy, rad, vxy, scr: Screen):
         self.sfc = pg.Surface((2*rad, 2*rad))  # 正方形の空のSurface
         self.sfc.set_colorkey((0, 0, 0))
@@ -94,6 +97,20 @@ class Ball:  # ボールのクラス
         self.blit(scr)
 
 
+class Kabe: #コートの角のクラス
+
+    def __init__(self, color, xy, points:list, scr:Screen): #pointsは鋭角, 直角, 鋭角の順
+        self.sfc = pg.Surface((200, 200)) #正方形の空のSurface
+        self.sfc.set_colorkey((0, 0, 0))
+        
+        pg.draw.polygon(self.sfc, color, points) #三角形を作成
+        self.rct = self.sfc.get_rect()
+        self.rct.center = xy
+
+    def blit(self, scr: Screen):
+        scr.sfc.blit(self.sfc, self.rct)
+
+
 def check_bound(obj_rct, scr_rct):
     """
     第1引数：こうかとんrectまたは爆弾rect
@@ -113,6 +130,20 @@ def main():
     clock = pg.time.Clock()
     scr = Screen("2Dテニス", SCREENRECT.size, "fig/tennis_court.jpg")
     fullscreen = False  # フルスクリーン無効
+
+    points_list = [[(0, 0), (0, 200), (200, 200)],
+                   [(0, 200), (0, 0), (200, 0)],
+                    [(0, 0), (200, 0), (200, 200)],
+                    [(0, 200), (200, 200), (200, 0)]] #4つの壁のpointを格納するリスト
+    xys = [(100, SCREENRECT.bottom-100), (100, 100), (SCREENRECT.width-100, 100),
+         (SCREENRECT.width-100, SCREENRECT.height-100)]
+    
+    kabes = [] #4つの壁のインスタンスを格納するリスト
+    print(points_list)
+    for points, xy in zip(points_list, xys):
+        kabe = Kabe((0, 0, 255), xy, points, scr)
+        kabes.append(kabe)
+        kabe.blit(scr)
 
     key_delta_p1 = {
         pg.K_w:    [0, -1],
@@ -138,6 +169,8 @@ def main():
 
     while True:
         scr.blit()
+        for kabe in kabes:
+            kabe.blit(scr)
         p1.update(scr)
         p2.update(scr)
 
@@ -151,11 +184,18 @@ def main():
                     scr.full_window()
 
         ball.update(scr)
-        #ボールとの衝突
-        if p1.rct.colliderect(ball.rct):
+
+        #ボールの衝突
+        if p1.rct.colliderect(ball.rct): #プレイヤー1との衝突
             ball.vx *= -1
-        elif p2.rct.colliderect(ball.rct):
+        elif p2.rct.colliderect(ball.rct): #プレイヤー2との衝突
             ball.vx *= -1
+        for kabe in kabes: #壁との衝突
+            if kabe.rct.colliderect(ball.rct):
+                ball.vx = -1 * ball.vx
+                ball.vy = -1 * ball.vy
+                
+        
 
         if ball.rct.left < scr.rct.left or scr.rct.right < ball.rct.right: #出たとき
             return
