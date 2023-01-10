@@ -63,8 +63,8 @@ class Player:
 
         for key, delta in self.key_delta.items():
             if key_dct[key]:
-                self.rct.centerx += delta[0] * 3
-                self.rct.centery += delta[1] * 3
+                self.rct.centerx += delta[0]
+                self.rct.centery += delta[1]
             # if check_bound(self.rct, scr.rct) != (+1, +1):
             #     self.rct.centerx -= delta[0]
             #     self.rct.centery -= delta[1]
