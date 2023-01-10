@@ -3,7 +3,7 @@ import random
 import time
 import sys
 
-SCREENRECT = pg.Rect(0, 0, 1364, 834)
+SCREENRECT = pg.Rect(0, 0, 1321, 701)
 
 
 class Screen:  # スクリーン
@@ -63,18 +63,53 @@ class Player:
 
         for key, delta in self.key_delta.items():
             if key_dct[key]:
-                self.rct.centerx += delta[0] * 10
-                self.rct.centery += delta[1] * 10
+                self.rct.centerx += delta[0] * 3
+                self.rct.centery += delta[1] * 3
             # if check_bound(self.rct, scr.rct) != (+1, +1):
             #     self.rct.centerx -= delta[0]
             #     self.rct.centery -= delta[1]
         self.blit(scr)
+
+
+class Ball:  # ボールのクラス
+    def __init__(self, color, rad, vxy, scr: Screen):
+        self.sfc = pg.Surface((2*rad, 2*rad))  # 正方形の空のSurface
+        self.sfc.set_colorkey((0, 0, 0))
+        pg.draw.circle(self.sfc, color, (rad, rad), rad)
+        self.rct = self.sfc.get_rect()
+        self.rct.centerx = 0
+        self.rct.centery = 0
+        self.vx, self.vy = vxy
+
+    def blit(self, scr: Screen):
+        scr.sfc.blit(self.sfc, self.rct)
+
+    def update(self, scr: Screen):
+        self.rct.move_ip(self.vx, self.vy)
+        yoko, tate = check_bound(self.rct, scr.rct)
+        self.vx *= yoko
+        self.vy *= tate
+        self.blit(scr)
+
+
+def check_bound(obj_rct, scr_rct):
+    """
+    第1引数：こうかとんrectまたは爆弾rect
+    第2引数：スクリーンrect
+    範囲内：+1／範囲外：-1
+    """
+    yoko, tate = +1, +1
+    if obj_rct.left < scr_rct.left or scr_rct.right < obj_rct.right:
+        yoko = -1
+    if obj_rct.top < scr_rct.top or scr_rct.bottom < obj_rct.bottom:
+        tate = -1
+    return yoko, tate
     
 
 def main():
     global fullscreen
 
-    scr = Screen("2Dテニス", SCREENRECT.size, "fig/tennis_court.png")
+    scr = Screen("2Dテニス", SCREENRECT.size, "fig/tennis_court.jpg")
     fullscreen = False  # フルスクリーン無効
 
     key_delta_p1 = {
