@@ -46,13 +46,12 @@ class Screen:  # スクリーン
 
 
 class Player:
-    def __init__(self, color , rad, key_delta, scr : Screen):
+    def __init__(self, color, xy, rad, key_delta, scr : Screen):
         self.sfc = pg.Surface((2*rad, 2*rad))  # 正方形の空のSurface
         self.sfc.set_colorkey((0, 0, 0))
         pg.draw.circle(self.sfc, color, (rad, rad), rad)
         self.rct = self.sfc.get_rect()
-        self.rct.centerx = 100
-        self.rct.centery = 100
+        self.rct.center = xy
         self.key_delta = key_delta
 
     def blit(self, scr: Screen):
@@ -64,8 +63,8 @@ class Player:
 
         for key, delta in self.key_delta.items():
             if key_dct[key]:
-                self.rct.centerx += delta[0]
-                self.rct.centery += delta[1]
+                self.rct.centerx += delta[0] * 10
+                self.rct.centery += delta[1] * 10
             # if check_bound(self.rct, scr.rct) != (+1, +1):
             #     self.rct.centerx -= delta[0]
             #     self.rct.centery -= delta[1]
@@ -79,13 +78,22 @@ def main():
     fullscreen = False  # フルスクリーン無効
 
     key_delta_p1 = {
+        pg.K_w:    [0, -1],
+        pg.K_s:  [0, +1],
+        pg.K_a:  [-1, 0],
+        pg.K_d: [+1, 0],
+    }
+    p1 = Player((255, 0, 0), (100, 500), 10, key_delta_p1, scr)
+    p1.blit(scr)
+
+    key_delta_p1 = {
         pg.K_UP:    [0, -1],
         pg.K_DOWN:  [0, +1],
         pg.K_LEFT:  [-1, 0],
         pg.K_RIGHT: [+1, 0],
     }
-    p1 = Player((255, 0, 0), 10, key_delta_p1, scr)
-    p1.blit(scr)
+    p2 = Player((0, 255, 0), (900, 500), 10, key_delta_p2, scr)
+    p2.blit(scr)
 
     while True:
         scr.blit()
