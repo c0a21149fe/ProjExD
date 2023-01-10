@@ -130,6 +130,9 @@ def main():
     p2 = Player((0, 255, 0), (900, 500), 10, key_delta_p2, scr)
     p2.blit(scr)
 
+    ball = Ball((0, 122, 122), 10, (10, 10), scr)
+    ball.update(scr)
+
     while True:
         scr.blit()
         p1.update(scr)
@@ -143,6 +146,11 @@ def main():
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_f:
                     scr.full_window()
+
+        ball.update(scr)
+        #ボールとの衝突
+        if p1.rct.colliderect(ball.rct):
+            ball.vx *= -1
 
 
         pg.display.update()
