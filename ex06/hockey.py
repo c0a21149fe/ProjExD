@@ -99,11 +99,11 @@ class Ball:  # ボールのクラス
 
 class Kabe: #コートの角のクラス
 
-    def __init__(self, color, xy, points:list, scr:Screen): #pointsは鋭角, 直角, 鋭角の順
+    def __init__(self, color, xy, scr:Screen): #pointsは鋭角, 直角, 鋭角の順
         self.sfc = pg.Surface((200, 200)) #正方形の空のSurface
         self.sfc.set_colorkey((0, 0, 0))
         
-        pg.draw.polygon(self.sfc, color, points) #三角形を作成
+        pg.draw.rect(self.sfc, color, (0, 0, 200, 200)) #三角形を作成
         self.rct = self.sfc.get_rect()
         self.rct.center = xy
 
@@ -131,17 +131,13 @@ def main():
     scr = Screen("2Dテニス", SCREENRECT.size, "fig/tennis_court.jpg")
     fullscreen = False  # フルスクリーン無効
 
-    points_list = [[(0, 0), (0, 200), (200, 200)],
-                   [(0, 200), (0, 0), (200, 0)],
-                    [(0, 0), (200, 0), (200, 200)],
-                    [(0, 200), (200, 200), (200, 0)]] #4つの壁のpointを格納するリスト
     xys = [(100, SCREENRECT.bottom-100), (100, 100), (SCREENRECT.width-100, 100),
          (SCREENRECT.width-100, SCREENRECT.height-100)]
     
     kabes = [] #4つの壁のインスタンスを格納するリスト
-    print(points_list)
-    for points, xy in zip(points_list, xys):
-        kabe = Kabe((0, 0, 255), xy, points, scr)
+
+    for xy in xys:
+        kabe = Kabe((0, 0, 255), xy, scr)
         kabes.append(kabe)
         kabe.blit(scr)
 
@@ -168,6 +164,7 @@ def main():
     ball.update(scr)
 
     while True:
+        #描画
         scr.blit()
         for kabe in kabes:
             kabe.blit(scr)
@@ -182,7 +179,7 @@ def main():
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_f:
                     scr.full_window()
-
+        #ボールの描画
         ball.update(scr)
 
         #ボールの衝突
@@ -194,8 +191,6 @@ def main():
             if kabe.rct.colliderect(ball.rct):
                 ball.vx = -1 * ball.vx
                 ball.vy = -1 * ball.vy
-                
-        
 
         if ball.rct.left < scr.rct.left or scr.rct.right < ball.rct.right: #出たとき
             return
