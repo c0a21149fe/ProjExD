@@ -3,6 +3,7 @@ import random
 import time
 import sys
 
+
 SCREENRECT = pg.Rect(0, 0, 1321, 701)
 
 
@@ -46,10 +47,10 @@ class Screen:  # スクリーン
 
 
 class Player:
-    def __init__(self, color, xy, rad, key_delta, scr : Screen):
-        self.sfc = pg.Surface((2*rad, 2*rad))  # 正方形の空のSurface
+    def __init__(self, color, xy, yoko, tate, key_delta, scr : Screen):
+        self.sfc = pg.Surface((yoko, tate))  # 正方形の空のSurface
         self.sfc.set_colorkey((0, 0, 0))
-        pg.draw.circle(self.sfc, color, (rad, rad), rad)
+        pg.draw.rect(self.sfc, color, (0, 0, yoko, tate), width = 0)
         self.rct = self.sfc.get_rect()
         self.rct.center = xy
         self.key_delta = key_delta
@@ -77,8 +78,8 @@ class Ball:  # ボールのクラス
         self.sfc.set_colorkey((0, 0, 0))
         pg.draw.circle(self.sfc, color, (rad, rad), rad)
         self.rct = self.sfc.get_rect()
-        self.rct.centerx = 0
-        self.rct.centery = 0
+        self.rct.centerx = 100
+        self.rct.centery = 100
         self.vx, self.vy = vxy
 
     def blit(self, scr: Screen):
@@ -108,7 +109,7 @@ def check_bound(obj_rct, scr_rct):
 
 def main():
     global fullscreen
-
+    clock = pg.time.Clock()
     scr = Screen("2Dテニス", SCREENRECT.size, "fig/tennis_court.jpg")
     fullscreen = False  # フルスクリーン無効
 
@@ -118,7 +119,7 @@ def main():
         pg.K_a:  [-1, 0],
         pg.K_d: [+1, 0],
     }
-    p1 = Player((255, 0, 0), (100, 500), 10, key_delta_p1, scr)
+    p1 = Player((255, 0, 0), (100, 500), 10, 100, key_delta_p1, scr)
     p1.blit(scr)
 
     key_delta_p2 = {
@@ -127,10 +128,10 @@ def main():
         pg.K_LEFT:  [-1, 0],
         pg.K_RIGHT: [+1, 0],
     }
-    p2 = Player((0, 255, 0), (900, 500), 10, key_delta_p2, scr)
+    p2 = Player((0, 255, 0), (900, 500), 10, 100, key_delta_p2, scr)
     p2.blit(scr)
 
-    ball = Ball((0, 122, 122), 10, (10, 10), scr)
+    ball = Ball((0, 122, 122), 10, (1, 1), scr)
     ball.update(scr)
 
     while True:
@@ -151,9 +152,12 @@ def main():
         #ボールとの衝突
         if p1.rct.colliderect(ball.rct):
             ball.vx *= -1
+        elif p2.rct.colliderect(ball.rct):
+            ball.vx *= -1
 
 
         pg.display.update()
+        clock.tick(1000)
 
 
 if __name__ == "__main__":
